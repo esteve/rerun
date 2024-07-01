@@ -52,11 +52,6 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
-<a href="#54" id="54">54</a>
-<a href="#55" id="55">55</a>
-<a href="#56" id="56">56</a>
-<a href="#57" id="57">57</a>
-<a href="#58" id="58">58</a>
 </pre></div><pre class="rust"><code><span class="kw">mod </span>lib;
 
 <span class="kw">use </span>argh::FromArgs;
@@ -86,9 +81,9 @@
     </span><span class="attr">#[argh(switch, short = <span class="string">'g'</span>)]
     </span>debug_symbols: bool,
 
-    <span class="doccomment">/// if set, will build the module target instead of the browser target.
-    </span><span class="attr">#[argh(switch)]
-    </span>module: bool,
+    <span class="doccomment">/// target to build for.
+    </span><span class="attr">#[argh(option, short = <span class="string">'t'</span>, long = <span class="string">"target"</span>, default = <span class="string">"Target::Browser"</span>)]
+    </span>target: Target,
 
     <span class="doccomment">/// set the output directory. This is a path relative to the cargo workspace root.
     </span><span class="attr">#[argh(option, short = <span class="string">'o'</span>, long = <span class="string">"out"</span>)]
@@ -106,13 +101,8 @@
         </span>));
     };
 
-    <span class="kw">let </span>target = <span class="kw">if </span>args.module {
-        Target::Module
-    } <span class="kw">else </span>{
-        Target::Browser
-    };
     <span class="kw">let </span>build_dir = args.build_dir.unwrap_or_else(default_build_dir);
 
-    build(profile, args.debug_symbols, target, <span class="kw-2">&amp;</span>build_dir)
+    build(profile, args.debug_symbols, args.target, <span class="kw-2">&amp;</span>build_dir)
 }
 </code></pre></div></section></main></body></html>
